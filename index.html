@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>月華 사주 — 나의 운의 흐름을 읽다</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap');
+:root{--gold:#d7b36a;--gold2:#f1d89b;--ink:#07182d;--paper:#f8f4eb;--muted:#b9c3d1}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:#06172d;color:#fff;font-family:"Noto Serif KR",serif}
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:
+linear-gradient(180deg,rgba(3,15,31,.25),rgba(3,15,31,.88)),url('background.png') center/cover fixed}
+.hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 35%,rgba(246,211,132,.13),transparent 25%),linear-gradient(90deg,rgba(0,0,0,.15),transparent 55%);pointer-events:none}
+.wrap{width:min(1100px,92vw);position:relative;z-index:2}
+.brand{text-align:center;letter-spacing:.25em;color:var(--gold2);font-size:14px;margin-bottom:20px}
+h1{font-size:clamp(42px,7vw,76px);font-weight:500;letter-spacing:.12em;margin:0;text-shadow:0 5px 25px #000}
+.subtitle{text-align:center;color:#e5e8ed;font-size:17px;line-height:2;margin:18px auto 34px;max-width:650px}
+.card{background:rgba(5,19,38,.82);border:1px solid rgba(215,179,106,.5);box-shadow:0 25px 80px rgba(0,0,0,.35);backdrop-filter:blur(10px);border-radius:20px;padding:28px}
+.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.field{display:flex;flex-direction:column;gap:8px}.field.full{grid-column:1/-1}
+label{font-size:13px;color:#e8d09b}
+input,select{width:100%;padding:14px 15px;border-radius:10px;border:1px solid #52647b;background:#0a203b;color:#fff;font:inherit;outline:none}
+input:focus,select:focus{border-color:var(--gold)}
+button{margin-top:20px;width:100%;padding:16px;border:0;border-radius:10px;background:linear-gradient(135deg,#b98b3c,#efd58e);color:#17243a;font:600 17px "Noto Serif KR";cursor:pointer}
+.notice{font-size:12px;color:#aeb9c8;line-height:1.8;margin-top:12px}
+#result{display:none;background:var(--paper);color:#162238;border-radius:20px;margin-top:24px;padding:28px}
+.result-head{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #d8d0bf;padding-bottom:20px}
+.result-head h2{margin:0;font-size:28px}.badge{color:#8a6727;border:1px solid #c9a967;border-radius:30px;padding:7px 12px;font-size:12px}
+.pillrow{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.pill{background:#eee6d5;padding:8px 12px;border-radius:30px;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.box{background:#fff;border:1px solid #ded7c8;border-radius:12px;padding:16px}.box small{color:#7d8490}.box strong{display:block;font-size:22px;margin-top:7px}
+.sections{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.section{background:#fff;border:1px solid #ded7c8;border-radius:12px;padding:18px}.section h3{margin:0 0 8px;color:#8a6727}.section p{margin:0;line-height:1.8;font-size:14px}
+footer{text-align:center;color:#9eabbc;font-size:12px;padding:35px}
+@media(max-width:700px){.formgrid,.sections,.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.hero{padding:50px 0}.card{padding:20px}.result-head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<section class="hero">
+<div class="wrap">
+<div class="brand">月華 · SAJU & FORTUNE</div>
+<h1>月華 사주</h1>
+<p class="subtitle">나의 타고난 기질부터 앞으로의 흐름까지.<br>생년월일과 태어난 시간을 바탕으로 나에게 맞는 운의 흐름을 살펴보세요.</p>
+
+<div class="card">
+<div class="formgrid">
+<div class="field"><label>이름 / 닉네임</label><input id="name" placeholder="예: 정은"></div>
+<div class="field"><label>성별</label><select id="gender"><option value="여">여성</option><option value="남">남성</option></select></div>
+<div class="field"><label>생년월일</label><input id="birth" type="date"></div>
+<div class="field"><label>태어난 시간</label><input id="time" type="time" value="12:00"></div>
+<div class="field"><label>달력</label><select id="calendar"><option value="solar">양력</option><option value="lunar">음력 (입력값을 양력 날짜로 간주하는 데모)</option></select></div>
+<div class="field"><label>출생지</label><input id="birthplace" placeholder="예: 서울"></div>
+<div class="field full"><label>상담 분야</label><select id="topic">
+<option>전체 사주</option><option>올해 운세</option><option>재물운</option><option>직업운 / 사업운</option>
+<option>연애운</option><option>결혼운</option><option>자녀운</option><option>건강운</option>
+<option>시험운</option><option>이직운</option><option>궁합</option><option>신년운세</option><option>이름 / 작명</option>
+</select></div>
+</div>
+<button onclick="makeReading()">✦ 내 사주 결과 바로 보기</button>
+<div class="notice">※ 이 페이지는 홈페이지 기능 시연용입니다. 실제 만세력 기반의 정확한 사주팔자 산출을 위해서는 절기·지역·음양력 변환을 포함한 전문 만세력 엔진/API 연동이 필요합니다.</div>
+</div>
+
+<div id="result"></div>
+<footer>月華 SAJU · 개인정보는 브라우저에서만 처리되는 데모입니다.</footer>
+</div>
+</section>
+
+<script>
+const stems=["갑","을","병","정","무","기","경","신","임","계"];
+const branches=["자","축","인","묘","진","사","오","미","신","유","술","해"];
+const elements=["목","목","화","화","토","토","금","금","수","수"];
+
+function pseudoPillar(y,m,d,h){
+  // UI demo calculation: year pillar is exact for the common civil-year convention;
+  // month/day/hour pillars are intentionally simplified for a front-end prototype.
+  const yi=((y-4)%60+60)%60, ys=stems[yi%10]+branches[yi%12];
+  const mi=((y*12+m+4)%60+60)%60, ms=stems[mi%10]+branches[mi%12];
+  const di=((Date.UTC(y,m-1,d)/86400000+49)%60+60)%60, ds=stems[di%10]+branches[di%12];
+  const hb=Math.floor(((h+1)%24)/2), hi=(di*2+hb)%10;
+  const hs=stems[hi]+branches[hb];
+  return [ys,ms,ds,hs];
+}
+function elementSummary(y,m,d,h){
+  const [ys,ms,ds,hs]=pseudoPillar(y,m,d,h);
+  const p=[ys,ms,ds,hs], counts={목:0,화:0,토:0,금:0,수:0};
+  p.forEach((x,i)=>counts[elements[stems.indexOf(x[0])]]++);
+  return {p,counts};
+}
+function score(base, offset){return ((base*13+offset*17)%31)+65}
+function makeReading(){
+  const name=document.getElementById("name").value.trim()||"방문자";
+  const birth=document.getElementById("birth").value;
+  if(!birth){alert("생년월일을 입력해주세요.");return}
+  const [y,m,d]=birth.split("-").map(Number);
+  const [h]=document.getElementById("time").value.split(":").map(Number);
+  const gender=document.getElementById("gender").value, topic=document.getElementById("topic").value;
+  const birthplace=document.getElementById("birthplace").value||"미입력";
+  const {p,counts}=elementSummary(y,m,d,isNaN(h)?12:h);
+  const dominant=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0];
+  const weak=Object.entries(counts).sort((a,b)=>a[1]-b[1])[0][0];
+  const base=y+m+d+(h||12);
+  const years=new Date().getFullYear();
+  const money=score(base,2), love=score(base,5), work=score(base,8);
+  const texts={
+    목:"성장과 확장을 중시하는 기질이 강합니다. 새로운 경험을 시작할 때 운의 흐름이 살아나는 편입니다.",
+    화:"표현력과 추진력이 돋보입니다. 사람과의 연결 속에서 기회가 커질 수 있습니다.",
+    토:"안정과 현실 감각이 강합니다. 서두르기보다 기반을 다질수록 결과가 오래갑니다.",
+    금:"판단력과 기준이 뚜렷합니다. 선택과 집중을 할수록 강점이 선명해집니다.",
+    수:"직관과 유연성이 돋보입니다. 흐름을 읽고 움직일 때 좋은 기회를 잡기 쉽습니다."
+  };
+  const topicText={
+    "재물운":"수입을 늘리는 것만큼 지출 구조와 장기적인 자산 계획을 정리하는 것이 중요합니다.",
+    "연애운":"감정을 빠르게 결론내리기보다 상대의 속도를 존중하면 관계의 안정감이 높아집니다.",
+    "직업운 / 사업운":"한 번에 많은 일을 벌이기보다 자신의 강점을 하나의 전문성으로 묶는 전략이 유리합니다.",
+    "올해 운세":`${years}년은 정리한 것을 실제 결과로 연결하는 흐름에 초점을 두면 좋습니다.`,
+    "전체 사주":"타고난 기질과 현재의 선택이 함께 작용하는 흐름입니다. 자신의 강점을 구체적인 행동으로 옮기는 것이 핵심입니다."
+  };
+  const special=topicText[topic]||topicText["전체 사주"];
+  document.getElementById("result").style.display="block";
+  document.getElementById("result").innerHTML=`
+    <div class="result-head"><div><h2>${name}님의 사주 리포트</h2><div style="margin-top:6px;color:#777">${y}.${String(m).padStart(2,"0")}.${String(d).padStart(2,"0")} · ${String(h||12).padStart(2,"0")}시 · ${gender} · ${birthplace}</div></div><div class="badge">${topic}</div></div>
+    <div class="pillrow">${p.map((x,i)=>`<span class="pill">${["년주","월주","일주","시주"][i]} ${x}</span>`).join("")}<span class="pill">강한 기운 · ${dominant}</span><span class="pill">보완 기운 · ${weak}</span></div>
+    <div class="grid">
+      <div class="box"><small>재물운</small><strong>${money}점</strong></div>
+      <div class="box"><small>연애운</small><strong>${love}점</strong></div>
+      <div class="box"><small>직업운</small><strong>${work}점</strong></div>
+      <div class="box"><small>올해 키워드</small><strong>${dominant} · ${years}</strong></div>
+    </div>
+    <div class="sections">
+      <div class="section"><h3>타고난 기질</h3><p>${texts[dominant]}</p></div>
+      <div class="section"><h3>선택하신 상담 분야</h3><p>${special}</p></div>
+      <div class="section"><h3>관계의 흐름</h3><p>혼자 판단하기보다 주변 사람의 의견을 참고할수록 균형을 잡기 좋습니다. 중요한 관계에서는 표현을 아끼지 않는 것이 좋습니다.</p></div>
+      <div class="section"><h3>실천 조언</h3><p>${weak} 기운을 보완하는 활동과 습관을 생활에 조금씩 더해보세요. 작은 루틴을 꾸준히 유지하는 것이 도움이 됩니다.</p></div>
+    </div>`;
+  document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"});
+}
+</script>
+</body>
+</html>
