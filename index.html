@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>명월당 明月堂 — 사주 · 궁합 · 신년운세</title>
+<title>천문도령 天文道令 — 사주 · 궁합 · 신년운세</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <!-- Firebase (Firestore) — 무료 Spark 요금제로 충분합니다 -->
@@ -121,7 +121,7 @@
     text-shadow: 0 2px 10px rgba(0,0,0,0.6);
   }
   .hero h1{
-    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    font-size: clamp(2.2rem, 7vw, 3.8rem);
     font-weight: 800; letter-spacing: 0.06em;
     margin: 0 0 8px; line-height: 1.25;
     text-shadow: 0 4px 24px rgba(0,0,0,0.7);
@@ -223,6 +223,21 @@
   }
   .time-unknown{ display:flex; align-items:center; gap:8px; margin-top:8px; font-size:0.82rem; color: var(--muted); }
   .time-unknown input{ width:auto; }
+
+  /* ---------- 숫자 키패드 생년월일 입력 ---------- */
+  .date-group{ display:flex; align-items:center; gap: 6px; }
+  .date-group input{
+    text-align:center;
+    -moz-appearance: textfield;
+    letter-spacing: 0.05em;
+  }
+  .date-group input::-webkit-outer-spin-button,
+  .date-group input::-webkit-inner-spin-button{
+    -webkit-appearance: none; margin:0;
+  }
+  .date-group .dy{ width: 5.2em; flex: none; }
+  .date-group .dm, .date-group .dd{ width: 3.4em; flex: none; }
+  .date-group span.sep{ color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
 
   .submit-btn{
     justify-self:center; margin-top: 6px;
@@ -385,7 +400,7 @@
 
 <nav>
   <div class="navwrap">
-    <a href="#top" class="brand">明月堂 명월당</a>
+    <a href="#top" class="brand">天文道令 천문도령</a>
     <div class="links">
       <a href="#saju">사주풀이</a>
       <a href="#gunghap">궁합</a>
@@ -399,7 +414,7 @@
 <div id="top" class="hero">
   <div class="container">
     <div class="kicker" data-edit="hero_kicker">생년월일시로 읽는 사주 · 궁합 · 신년운세</div>
-    <h1>明月堂<small>MYEONGWOLDANG</small></h1>
+    <h1>天文道令<small>CHEONMUNDORYEONG</small></h1>
     <svg class="brush-underline" viewBox="0 0 200 20" aria-hidden="true"><path d="M6,12 C54,4 146,18 194,7" /></svg>
     <p class="sub" data-edit="hero_sub">나의 타고난 기질부터 앞으로의 흐름까지,<br>복잡한 사주를 쉽고 편안하게 알려드립니다.</p>
     <a class="cta" href="#saju">사주 바로 보기</a>
@@ -408,7 +423,7 @@
 
 <section class="about">
   <div class="container">
-    <div class="eyebrow">ABOUT 明月堂</div>
+    <div class="eyebrow">ABOUT 天文道令</div>
     <h2 class="title">사주팔자, 무엇을 보는 것일까요</h2>
     <p class="lead" data-edit="about_lead">태어난 순간의 하늘과 땅의 기운을 여덟 글자로 풀어, 타고난 기질과 흐름을 살펴봅니다.</p>
     <div class="about-grid">
@@ -437,10 +452,10 @@
     <h2 class="title">전문가 소개</h2>
     <p class="lead">※ 아래 소개는 예시 문구입니다. 실제 전문가 정보로 교체해주세요.</p>
     <div class="expert">
-      <div class="expert-photo">明</div>
+      <div class="expert-photo">天</div>
       <div>
         <h3 data-edit="expert_name">이서연 원장 (예시)</h3>
-        <div class="role" data-edit="expert_role">명리학 상담 15년 · 명월당 대표</div>
+        <div class="role" data-edit="expert_role">명리학 상담 15년 · 천문도령 대표</div>
         <p data-edit="expert_quote">"사주는 정해진 운명이 아니라, 내가 가진 결의 방향을 아는 지도라고 생각합니다."</p>
         <p data-edit="expert_bio">대학에서 동양철학을 전공하고, 명리학과 자평학을 오랜 시간 공부해왔습니다. 어렵고 딱딱하게 느껴질 수 있는 사주를 쉬운 언어로 풀어드리는 것을 상담의 원칙으로 삼고 있습니다.</p>
         <div class="expert-tags">
@@ -483,8 +498,15 @@
         </div>
         <div class="row3">
           <div>
-            <label for="s_date">생년월일 (양력)</label>
-            <input type="date" id="s_date" required>
+            <label for="s_year">생년월일 (양력)</label>
+            <div class="date-group">
+              <input class="dy" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="s_year" placeholder="1990" required>
+              <span class="sep">년</span>
+              <input class="dm" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="s_month" placeholder="1" required>
+              <span class="sep">월</span>
+              <input class="dd" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="s_day" placeholder="1" required>
+              <span class="sep">일</span>
+            </div>
           </div>
           <div>
             <label for="s_time">태어난 시간</label>
@@ -563,7 +585,16 @@
             <div><label for="g_a_gender">성별</label>
               <select id="g_a_gender"><option value="">선택 안 함</option><option value="f">여성</option><option value="m">남성</option></select>
             </div>
-            <div><label for="g_a_date">생년월일 (양력)</label><input type="date" id="g_a_date" required></div>
+            <div><label for="g_a_year">생년월일 (양력)</label>
+              <div class="date-group">
+                <input class="dy" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="g_a_year" placeholder="1990" required>
+                <span class="sep">년</span>
+                <input class="dm" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="g_a_month" placeholder="1" required>
+                <span class="sep">월</span>
+                <input class="dd" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="g_a_day" placeholder="1" required>
+                <span class="sep">일</span>
+              </div>
+            </div>
           </div>
         </fieldset>
         <fieldset>
@@ -573,7 +604,16 @@
             <div><label for="g_b_gender">성별</label>
               <select id="g_b_gender"><option value="">선택 안 함</option><option value="f">여성</option><option value="m">남성</option></select>
             </div>
-            <div><label for="g_b_date">생년월일 (양력)</label><input type="date" id="g_b_date" required></div>
+            <div><label for="g_b_year">생년월일 (양력)</label>
+              <div class="date-group">
+                <input class="dy" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="g_b_year" placeholder="1990" required>
+                <span class="sep">년</span>
+                <input class="dm" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="g_b_month" placeholder="1" required>
+                <span class="sep">월</span>
+                <input class="dd" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="g_b_day" placeholder="1" required>
+                <span class="sep">일</span>
+              </div>
+            </div>
           </div>
         </fieldset>
         <button type="submit" class="submit-btn">궁합 보기</button>
@@ -612,8 +652,15 @@
       <form id="saeunForm">
         <div class="row">
           <div>
-            <label for="y_date">생년월일 (양력)</label>
-            <input type="date" id="y_date" required>
+            <label for="y_year">생년월일 (양력)</label>
+            <div class="date-group">
+              <input class="dy" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="y_year" placeholder="1990" required>
+              <span class="sep">년</span>
+              <input class="dm" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="y_month" placeholder="1" required>
+              <span class="sep">월</span>
+              <input class="dd" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="y_day" placeholder="1" required>
+              <span class="sep">일</span>
+            </div>
           </div>
           <div>
             <label for="y_year">궁금한 해</label>
@@ -666,7 +713,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <h3>明月堂 명월당</h3>
+        <h3>天文道令 천문도령</h3>
         <p data-edit="footer_intro">나의 타고난 기질부터 앞으로의 흐름까지, 복잡한 사주를 쉽고 편안하게 알려드립니다.</p>
         <p style="margin-top:14px;">※ 아래 정보는 예시입니다. 실제 상호·연락처로 교체해주세요.</p>
       </div>
@@ -811,6 +858,36 @@
     return {y,m,d};
   }
 
+  // ---- 숫자 키패드 생년월일 입력 유틸 ----
+  function wireDateGroup(yearId, monthId, dayId){
+    const yEl = document.getElementById(yearId);
+    const mEl = document.getElementById(monthId);
+    const dEl = document.getElementById(dayId);
+    [yEl, mEl, dEl].forEach(el => {
+      el.addEventListener('input', function(){
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, this.maxLength);
+      });
+    });
+    yEl.addEventListener('input', function(){ if (this.value.length === 4) mEl.focus(); });
+    mEl.addEventListener('input', function(){ if (this.value.length === 2) dEl.focus(); });
+  }
+
+  function readDateGroup(yearId, monthId, dayId){
+    const y = Number(document.getElementById(yearId).value);
+    const m = Number(document.getElementById(monthId).value);
+    const d = Number(document.getElementById(dayId).value);
+    if (!y || !m || !d) return null;
+    if (y < 1900 || y > 2100) return null;
+    if (m < 1 || m > 12) return null;
+    if (d < 1 || d > 31) return null;
+    return { y, m, d };
+  }
+
+  wireDateGroup('s_year', 's_month', 's_day');
+  wireDateGroup('g_a_year', 'g_a_month', 'g_a_day');
+  wireDateGroup('g_b_year', 'g_b_month', 'g_b_day');
+  wireDateGroup('y_year', 'y_month', 'y_day');
+
   function pillarHTML(label, stemIdx, branchIdx){
     const s = STEMS[stemIdx], b = BRANCHES[branchIdx];
     return `
@@ -891,9 +968,9 @@
     e.preventDefault();
     const errorEl = document.getElementById('s_error');
     errorEl.textContent = '';
-    const dateVal = document.getElementById('s_date').value;
-    if (!dateVal){ errorEl.textContent = '생년월일을 입력해주세요.'; return; }
-    const {y,m,d} = parseDate(dateVal);
+    const parsed = readDateGroup('s_year', 's_month', 's_day');
+    if (!parsed){ errorEl.textContent = '생년월일을 정확히 입력해주세요. (예: 1990 / 1 / 1)'; return; }
+    const {y,m,d} = parsed;
     const nameVal = document.getElementById('s_name').value.trim();
 
     const yearP = getYearStemBranch(y,m,d);
@@ -974,15 +1051,14 @@
     e.preventDefault();
     const errorEl = document.getElementById('g_error');
     errorEl.textContent = '';
-    const aDate = document.getElementById('g_a_date').value;
-    const bDate = document.getElementById('g_b_date').value;
-    if (!aDate || !bDate){ errorEl.textContent = '두 사람의 생년월일을 모두 입력해주세요.'; return; }
+    const a = readDateGroup('g_a_year', 'g_a_month', 'g_a_day');
+    const b = readDateGroup('g_b_year', 'g_b_month', 'g_b_day');
+    if (!a || !b){ errorEl.textContent = '두 사람의 생년월일을 정확히 입력해주세요.'; return; }
 
     const aName = document.getElementById('g_a_name').value.trim() || '본인';
     const bName = document.getElementById('g_b_name').value.trim() || '상대방';
     const gType = document.getElementById('g_type').value;
 
-    const a = parseDate(aDate), b = parseDate(bDate);
     const aDay = getDayStemBranch(a.y, a.m, a.d);
     const bDay = getDayStemBranch(b.y, b.m, b.d);
     const aYear = getYearStemBranch(a.y, a.m, a.d);
@@ -1032,9 +1108,9 @@
     e.preventDefault();
     const errorEl = document.getElementById('y_error');
     errorEl.textContent = '';
-    const dateVal = document.getElementById('y_date').value;
-    if (!dateVal){ errorEl.textContent = '생년월일을 입력해주세요.'; return; }
-    const {y,m,d} = parseDate(dateVal);
+    const parsedY = readDateGroup('y_year', 'y_month', 'y_day');
+    if (!parsedY){ errorEl.textContent = '생년월일을 정확히 입력해주세요. (예: 1990 / 1 / 1)'; return; }
+    const {y,m,d} = parsedY;
     const targetYear = Number(yearSelect.value);
 
     const dayP = getDayStemBranch(y,m,d);
@@ -1211,3 +1287,4 @@
 </script>
 </body>
 </html>
+
