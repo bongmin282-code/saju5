@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>천문도령 天文道令 — 사주 · 궁합 · 신년운세</title>
+<title>천문도령 天文道令 — 사주 · 오늘의 운세 · 세운</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <!-- Firebase (Firestore) — 무료 Spark 요금제로 충분합니다 -->
@@ -277,6 +277,15 @@
 
   .pillars{ display:grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 38px; }
   @media (max-width: 620px){ .pillars{ grid-template-columns: repeat(2,1fr); } }
+
+  .saeun-grid{ display:grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+  @media (max-width: 700px){ .saeun-grid{ grid-template-columns: repeat(2,1fr); } }
+  .saeun-card{ background: var(--panel-2); border: 1px solid var(--line); padding: 16px 10px; text-align:center; }
+  .saeun-card.is-now{ border-color: var(--gold-bright); }
+  .saeun-card .syear{ font-size: 0.85rem; color: var(--gold-bright); margin-bottom: 8px; }
+  .saeun-card .shan{ font-family:'Nanum Myeongjo',serif; font-weight:800; font-size: 1.3rem; display:block; }
+  .saeun-card .stag{ display:inline-block; margin-top: 8px; padding: 2px 8px; font-size: 0.72rem; background: rgba(201,162,75,0.14); color: var(--gold-bright); }
+  .saeun-card .sdesc{ margin-top: 10px; font-size: 0.76rem; color: var(--muted); line-height:1.5; }
   .pillar{ background: var(--panel-2); border: 1px solid var(--line); position:relative; padding: 18px 8px 16px; text-align:center; }
   .pillar::before{ content:""; position:absolute; top:0; left:0; right:0; height:3px; background: var(--gold); }
   .pillar .label{ font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; }
@@ -417,8 +426,6 @@
     <a href="#top" class="brand">天文道令 천문도령</a>
     <div class="links">
       <a href="#saju">사주풀이</a>
-      <a href="#gunghap">궁합</a>
-      <a href="#saeun">신년운세</a>
       <a href="#expert">전문가 소개</a>
       <a href="#faq">이용안내</a>
     </div>
@@ -427,7 +434,7 @@
 
 <div id="top" class="hero">
   <div class="container">
-    <div class="kicker" data-edit="hero_kicker">생년월일시로 읽는 사주 · 궁합 · 신년운세</div>
+    <div class="kicker" data-edit="hero_kicker">생년월일 하나로 보는 사주팔자 · 오늘의 운세 · 5년 세운</div>
     <h1>天文道令<small>CHEONMUNDORYEONG</small></h1>
     <svg class="brush-underline" viewBox="0 0 200 20" aria-hidden="true"><path d="M6,12 C54,4 146,18 194,7" /></svg>
     <p class="sub" data-edit="hero_sub">나의 타고난 기질부터 앞으로의 흐름까지,<br>복잡한 사주를 쉽고 편안하게 알려드립니다.</p>
@@ -454,7 +461,7 @@
       <div class="about-card">
         <span class="num">日干</span>
         <h3>나를 뜻하는 일간</h3>
-        <p>일주의 천간, 즉 일간이 '나'를 나타냅니다. 궁합과 신년운세 모두 이 일간을 중심으로 다른 기운과의 관계를 살핍니다.</p>
+        <p>일주의 천간, 즉 일간이 '나'를 나타냅니다. 사주격과 오늘의 운세, 향후 5년 세운 모두 이 일간을 중심으로 다른 기운과의 관계를 살핍니다.</p>
       </div>
     </div>
   </div>
@@ -495,7 +502,7 @@
       <tr><td data-edit="price4_name">궁합</td><td data-edit="price4_desc">두 사람의 오행 상성 풀이</td><td class="price" data-edit="price4_amt">40,000원</td></tr>
       <tr><td data-edit="price5_name">종합 사주</td><td data-edit="price5_desc">사주 전반 + 신년운세 통합 상담</td><td class="price" data-edit="price5_amt">50,000원</td></tr>
     </table>
-    <p class="price-note" data-edit="pricing_note">아래 사주풀이 · 궁합 · 신년운세 계산기는 무료로 바로 확인하실 수 있으며, 더 깊은 풀이가 필요하시면 유료 상담을 신청해주세요. (상담 신청 기능은 준비 중입니다.)</p>
+    <p class="price-note" data-edit="pricing_note">아래 사주풀이 계산기는 무료로 바로 확인하실 수 있으며, 더 깊은 풀이가 필요하시면 유료 상담을 신청해주세요. (상담 신청 기능은 준비 중입니다.)</p>
   </div>
 </section>
 
@@ -503,7 +510,7 @@
   <div class="container">
     <div class="eyebrow">SAJU CALCULATOR</div>
     <h2 class="title">사주풀이</h2>
-    <p class="lead">양력 생년월일을 입력하면 네 기둥과 오행 균형, 일간 성격을 바로 보여드립니다.</p>
+    <p class="lead">생년월일 하나만 입력하면 사주팔자 전체 분석부터 사주격, 오늘의 운세, 향후 5년 세운까지 한 번에 보여드립니다.</p>
     <div class="panel">
       <form id="sajuForm">
         <div>
@@ -574,145 +581,25 @@
             <h3>여덟 글자 자세히 보기</h3>
             <p id="s_detailText"></p>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="gunghap">
-  <div class="container">
-    <div class="eyebrow">COMPATIBILITY</div>
-    <h2 class="title">궁합 보기</h2>
-    <p class="lead">두 사람의 생년월일로 일간(오행)의 상성을 바로 확인합니다.</p>
-    <div class="panel">
-      <form id="gunghapForm">
-        <div>
-          <label for="g_type">궁합 종류</label>
-          <select id="g_type">
-            <option>연인 궁합</option>
-            <option>부부 궁합</option>
-            <option>결혼 궁합</option>
-            <option>친구 궁합</option>
-            <option>사업 파트너 궁합</option>
-          </select>
-        </div>
-        <fieldset>
-          <legend>본인</legend>
-          <div class="row3">
-            <div><label for="g_a_name">이름</label><input type="text" id="g_a_name" placeholder="예: 나"></div>
-            <div><label for="g_a_gender">성별</label>
-              <select id="g_a_gender"><option value="">선택 안 함</option><option value="f">여성</option><option value="m">남성</option></select>
-            </div>
-            <div><label for="g_a_year">생년월일</label>
-              <div class="cal-toggle">
-                <label><input type="radio" name="g_a_caltype" value="solar" checked> 양력</label>
-                <label><input type="radio" name="g_a_caltype" value="lunar"> 음력</label>
-                <label class="leap-check" id="g_a_leapWrap"><input type="checkbox" id="g_a_leap"> 윤달</label>
-              </div>
-              <div class="date-group">
-                <input class="dy" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="g_a_year" placeholder="1990" required>
-                <span class="sep">년</span>
-                <input class="dm" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="g_a_month" placeholder="1" required>
-                <span class="sep">월</span>
-                <input class="dd" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="g_a_day" placeholder="1" required>
-                <span class="sep">일</span>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>상대방</legend>
-          <div class="row3">
-            <div><label for="g_b_name">이름</label><input type="text" id="g_b_name" placeholder="예: 상대"></div>
-            <div><label for="g_b_gender">성별</label>
-              <select id="g_b_gender"><option value="">선택 안 함</option><option value="f">여성</option><option value="m">남성</option></select>
-            </div>
-            <div><label for="g_b_year">생년월일</label>
-              <div class="cal-toggle">
-                <label><input type="radio" name="g_b_caltype" value="solar" checked> 양력</label>
-                <label><input type="radio" name="g_b_caltype" value="lunar"> 음력</label>
-                <label class="leap-check" id="g_b_leapWrap"><input type="checkbox" id="g_b_leap"> 윤달</label>
-              </div>
-              <div class="date-group">
-                <input class="dy" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="g_b_year" placeholder="1990" required>
-                <span class="sep">년</span>
-                <input class="dm" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="g_b_month" placeholder="1" required>
-                <span class="sep">월</span>
-                <input class="dd" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="g_b_day" placeholder="1" required>
-                <span class="sep">일</span>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <button type="submit" class="submit-btn">궁합 보기</button>
-        <div class="error-msg" id="g_error" role="alert"></div>
-      </form>
-
-      <div class="result-block" id="g_result">
-        <h3 class="result-title" id="g_resultTitle">궁합 결과</h3>
-        <div class="compat-result">
-          <div class="compat-people">
-            <div class="compat-person"><div class="han" id="g_a_han"></div><div id="g_a_label"></div></div>
-            <div class="compat-person"><div class="han" id="g_b_han"></div><div id="g_b_label"></div></div>
-          </div>
-          <div class="compat-badge" id="g_badge"></div>
-        </div>
-        <div class="interpretation">
           <div class="block">
-            <p id="g_text"></p>
+            <h3 id="s_gyeokTitle">사주격(四柱格) — 자평진전 기준</h3>
+            <p id="s_gyeokText"></p>
+            <p id="s_gyeokStrengthText" style="margin-top:8px;"></p>
+            <p style="font-size:0.78rem; color:var(--muted); margin-top:8px;">※ 격은 월지(태어난 달의 지지)가 품은 정기(正氣)와 일간의 관계로 간이 산출한 것입니다. 실제 감정에서는 계절의 강약과 통근 여부 등을 함께 살핍니다.</p>
           </div>
-          <div class="block">
-            <h3>띠로 보는 궁합</h3>
-            <p id="g_animalText"></p>
+          <div class="block" style="border-top:1px solid var(--gold); padding-top:22px; margin-top:22px;">
+            <h3 id="s_todayTitle">오늘의 운세</h3>
+            <div class="pillars" id="s_todayPillars" style="grid-template-columns: repeat(2,1fr); max-width:340px; margin:0 auto 20px;"></div>
+            <p id="s_todayTenGodText"></p>
+            <p id="s_todaySpouseText" style="margin-top:10px;"></p>
+            <p id="s_todayAnimalText" style="margin-top:10px;"></p>
+            <p id="s_todayLuckText" style="margin-top:10px; color:var(--gold-bright);"></p>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="saeun">
-  <div class="container">
-    <div class="eyebrow">NEW YEAR FORTUNE</div>
-    <h2 class="title">신년운세</h2>
-    <p class="lead">생년월일과 궁금한 해를 선택하면, 그 해의 기운과 나의 일간이 어떤 관계를 맺는지 보여드립니다.</p>
-    <div class="panel">
-      <form id="saeunForm">
-        <div class="row">
-          <div>
-            <label for="y_by">생년월일</label>
-            <div class="cal-toggle">
-              <label><input type="radio" name="y_caltype" value="solar" checked> 양력</label>
-              <label><input type="radio" name="y_caltype" value="lunar"> 음력</label>
-              <label class="leap-check" id="y_leapWrap"><input type="checkbox" id="y_leap"> 윤달</label>
-            </div>
-            <div class="date-group">
-              <input class="dy" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="y_by" placeholder="1990" required>
-              <span class="sep">년</span>
-              <input class="dm" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="y_bm" placeholder="1" required>
-              <span class="sep">월</span>
-              <input class="dd" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" id="y_bd" placeholder="1" required>
-              <span class="sep">일</span>
-            </div>
-          </div>
-          <div>
-            <label for="y_year">궁금한 해</label>
-            <select id="y_year"></select>
-          </div>
-        </div>
-        <button type="submit" class="submit-btn">신년운세 보기</button>
-        <div class="error-msg" id="y_error" role="alert"></div>
-      </form>
-
-      <div class="result-block" id="y_result">
-        <h3 class="result-title" id="y_resultTitle">신년운세 결과</h3>
-        <p class="result-sub" id="y_resultSub"></p>
-        <div class="pillars" id="y_pillars" style="grid-template-columns: repeat(2,1fr); max-width:340px; margin-left:auto; margin-right:auto;"></div>
-        <div class="interpretation">
-          <div class="block">
-            <h3 id="y_relTitle"></h3>
-            <p id="y_relText"></p>
+          <div class="block" style="border-top:1px solid var(--gold); padding-top:22px; margin-top:22px;">
+            <h3 id="s_saeunTitle">향후 5년 세운(歲運)</h3>
+            <p class="lead" style="margin:0 0 18px; font-size:0.9rem;">일간과 매년의 간지가 맺는 십성 관계로 앞으로 5년의 큰 흐름을 살펴봅니다.</p>
+            <div class="saeun-grid" id="s_saeunGrid"></div>
+            <div id="s_saeunDetail" style="margin-top:20px;"></div>
           </div>
         </div>
       </div>
@@ -762,7 +649,7 @@
       </div>
     </div>
     <div class="disclaimer" data-edit="footer_disclaimer">
-      본 홈페이지의 사주·궁합·신년운세 계산기는 전통 명리학의 기본 원리를 바탕으로 하되, 절기 날짜는 근사값을 사용한 참고용·오락용 콘텐츠입니다. 정확한 감정이 필요하시면 전문가와 상담해주세요.
+      본 홈페이지의 사주풀이 계산기(사주격·오늘의 운세·세운 포함)는 전통 명리학(자평진전 등)의 기본 원리를 바탕으로 하되, 절기 날짜는 근사값을 사용한 참고용·오락용 콘텐츠입니다. 정확한 감정이 필요하시면 전문가와 상담해주세요.
     </div>
     <div class="admin-toggle-wrap">
       <button type="button" class="admin-toggle-btn" id="adminToggleBtnFooter">⚙ 관리자 모드</button>
@@ -770,7 +657,7 @@
   </div>
 </footer>
 
-<a class="kakao-float" href="https://open.kakao.com/o/gSoA7HMi" target="_blank" rel="noopener" aria-label="카카오 오픈채팅으로 상담 문의하기">
+<a class="kakao-float" href="https://open.kakao.com/o/여기에_오픈채팅코드" target="_blank" rel="noopener" aria-label="카카오 오픈채팅으로 상담 문의하기">
   <span class="kakao-tooltip">오픈채팅 상담</span>
   <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path fill="#3C1E1E" d="M20 6C10.6 6 3 12.1 3 19.6c0 4.8 3.2 9 8 11.4-.3 1.2-1.3 4.7-1.5 5.4-.2.9.3 1.9 1.3 1.5.7-.3 5.6-3.7 7.9-5.3.7.1 1.5.1 2.3.1 9.4 0 17-6.1 17-13.6C38 12.1 30.4 6 20 6z"/>
@@ -831,7 +718,113 @@
     '시주 時柱': '자녀와 노년기, 인생 후반부의 결실을 보여줍니다.',
   };
 
+  /* ---------- 십성(十神) & 자평진전 격국(格局) ---------- */
+  // 천간 인덱스(0=갑..9=계)의 짝/홀수로 음양 판정: 짝수=양간, 홀수=음간
+  function stemIsYang(stemIdx){ return stemIdx % 2 === 0; }
+
+  // 일간(dayStemIdx) 기준으로 otherStemIdx 천간과의 십성 관계를 반환
+  function getTenGod(dayStemIdx, otherStemIdx){
+    const dayEl = STEMS[dayStemIdx].el, otherEl = STEMS[otherStemIdx].el;
+    const same = stemIsYang(dayStemIdx) === stemIsYang(otherStemIdx);
+    if (otherEl === dayEl) return same ? '비견' : '겁재';
+    if (GENERATES[dayEl] === otherEl) return same ? '식신' : '상관';
+    if (CONTROLS[dayEl] === otherEl) return same ? '편재' : '정재';
+    if (CONTROLS[otherEl] === dayEl) return same ? '편관' : '정관';
+    if (GENERATES[otherEl] === dayEl) return same ? '편인' : '정인';
+    return '비견';
+  }
+
+  // 12지지가 품은 정기(正氣) 천간 — 전통 지장간표의 본기(本氣)만 사용한 간이 표
+  const BRANCH_MAIN_STEM = [9,5,0,1,4,2,3,5,6,7,4,8]; // 자축인묘진사오미신유술해 순
+
+  const GYEOKGUK_INFO = {
+    정관: { name:'정관격(正官格)', desc:'반듯한 원칙과 책임감으로 조직과 사회 안에서 신뢰를 쌓는 격입니다. 정해진 규범을 지키고 맡은 자리에서 꾸준히 인정받는 흐름을 타고났습니다.' },
+    편관: { name:'편관격(偏官格) · 칠살격', desc:'강한 추진력과 승부 근성을 지닌 격입니다. 위기 속에서 오히려 힘을 발휘하는 유형으로, 이 힘을 다스려줄 기운(식상·인성)을 만나면 큰 그릇으로 자랍니다.' },
+    정재: { name:'정재격(正財格)', desc:'성실하게 쌓아 안정적인 자산과 신용을 만드는 격입니다. 계획적이고 관리 능력이 뛰어나 재물을 지키는 힘이 강합니다.' },
+    편재: { name:'편재격(偏財格)', desc:'통이 크고 기회를 붙잡는 순발력이 있는 격입니다. 사업·투자·유통처럼 흐름이 있는 재물과 인연이 깊습니다.' },
+    정인: { name:'정인격(正印格)', desc:'배움과 인정, 문서와 관련된 복이 있는 격입니다. 학문이나 전문성을 바탕으로 안정적인 신뢰를 쌓아갑니다.' },
+    편인: { name:'편인격(偏印格) · 효신격', desc:'남다른 통찰과 직관이 뛰어난 격입니다. 다만 한 가지에 깊이 몰입하는 경향이 강해, 스스로를 다독이는 균형이 필요합니다.' },
+    식신: { name:'식신격(食神格)', desc:'여유롭고 표현력이 좋은 격입니다. 먹고사는 복이 두텁고, 무언가를 만들어내고 나누는 일에서 힘을 얻습니다.' },
+    상관: { name:'상관격(傷官格)', desc:'재능이 뛰어나고 표현이 자유로운 격입니다. 틀에 얽매이지 않는 만큼, 원칙·윗사람과의 마찰을 줄이는 지혜가 필요합니다.' },
+    비견: { name:'건록격(建祿格)', desc:'월지에 비견이 자리해 스스로 일어서는 힘이 강한 격입니다. 남에게 기대기보다 자신의 힘으로 자리를 만들어가는 자립형입니다.' },
+    겁재: { name:'양인격(羊刃格) 성향', desc:'월지에 겁재가 자리해 승부욕과 추진력이 매우 강한 격입니다. 이 힘을 잘 다스리면 큰 성취를, 그렇지 못하면 굴곡을 겪기 쉬우니 스스로를 조절하는 힘이 중요합니다.' },
+  };
+
+  // 오늘의 운세: 일간과 '오늘의 일간'의 십성 관계에 따른 해석
+  const TODAY_TEN_GOD_TEXT = {
+    비견: '오늘은 나와 같은 기운이 두드러지는 날입니다. 동료나 또래와의 협업에서 힘을 얻기 좋고, 자신의 의견을 당당히 낼수록 결과가 좋습니다. 다만 고집을 부리면 불필요한 신경전이 생길 수 있으니 한 발 양보하는 여유를 가지세요.',
+    겁재: '오늘은 경쟁심과 추진력이 강해지는 날입니다. 목표를 향해 밀어붙이기 좋은 기운이지만, 금전 거래나 동업과 관련된 결정은 신중하게 접근하는 것이 안전합니다.',
+    식신: '오늘은 여유롭고 표현하고 싶은 기운이 흐르는 날입니다. 먹거리·취미·창작과 관련된 일에서 만족을 얻기 좋고, 사람들과 나누는 자리도 즐거운 결실로 이어집니다.',
+    상관: '오늘은 재치와 표현력이 빛나는 날입니다. 새로운 아이디어를 내거나 자신을 드러내기에 좋은 타이밍이지만, 말이 앞서 오해를 살 수 있으니 표현 방식에 한 번 더 신경 쓰세요.',
+    편재: '오늘은 기회를 붙잡는 순발력이 살아나는 날입니다. 투자·거래·새로운 제안이 들어온다면 적극적으로 검토해볼 만하지만, 즉흥적인 지출은 자제하는 것이 좋습니다.',
+    정재: '오늘은 차근차근 쌓아온 것들이 안정적으로 자리 잡는 날입니다. 계획했던 일을 실행하거나 금전을 관리하기 좋은 흐름이며, 신용과 관련된 일에서 좋은 평가를 받습니다.',
+    편관: '오늘은 긴장감과 함께 강한 추진력이 따르는 날입니다. 부담스러운 일도 정면으로 부딪히면 의외로 잘 풀리지만, 무리한 대립은 피하고 페이스 조절에 신경 쓰세요.',
+    정관: '오늘은 책임감 있게 맡은 역할을 해내기 좋은 날입니다. 규칙과 절차를 지키는 태도가 좋은 평판으로 이어지며, 윗사람이나 조직으로부터 신뢰를 얻기 좋은 흐름입니다.',
+    편인: '오늘은 직관과 통찰이 예리해지는 날입니다. 혼자만의 시간 속에서 좋은 아이디어가 떠오르기 쉬우니, 급하게 결론 내리기보다 충분히 생각을 정리해보세요.',
+    정인: '오늘은 배움과 도움의 기운이 따르는 날입니다. 공부나 문서 관련 일에 좋은 흐름이 있고, 주변의 조언이나 귀인의 도움을 받기 좋은 타이밍입니다.',
+  };
+
+  // 오행별 행운의 색·방향 (전통 오방색/오방위 기준)
+  const ELEMENT_LUCK = {
+    목: { color: '청색·초록색', dir: '동쪽' },
+    화: { color: '적색·붉은색', dir: '남쪽' },
+    토: { color: '황색·노란색', dir: '중앙' },
+    금: { color: '흰색·금색', dir: '서쪽' },
+    수: { color: '흑색·남색', dir: '북쪽' },
+  };
+
+  // 오늘의 지지와 일지(나 자신·배우자 자리)의 관계 코멘트
+  function getSpouseBranchComment(dayBranchIdx, todayBranchIdx){
+    if (dayBranchIdx === todayBranchIdx){
+      return '오늘은 나의 자리(일지)와 같은 기운이 겹치는 날입니다. 평소의 나다움이 더 강하게 드러나며, 배우자나 가까운 사람과의 관계에도 마음이 쓰이는 하루입니다.';
+    }
+    const dEl = BRANCHES[dayBranchIdx].el, tEl = BRANCHES[todayBranchIdx].el;
+    if (GENERATES[tEl] === dEl) return '오늘의 기운이 나의 자리(일지)를 돕는 날입니다. 가까운 사람이나 배우자로부터 힘을 받기 좋은 흐름입니다.';
+    if (GENERATES[dEl] === tEl) return '나의 자리(일지)의 기운을 오늘 밖으로 쏟아내는 날입니다. 가까운 사람을 챙기거나 마음을 쓰는 데 에너지가 쓰이기 쉽습니다.';
+    if (CONTROLS[tEl] === dEl) return '오늘의 기운이 나의 자리(일지)를 누르는 날입니다. 배우자나 가까운 사람과의 관계에서 긴장이 생기지 않도록 배려가 필요합니다.';
+    if (CONTROLS[dEl] === tEl) return '나의 자리(일지)가 오늘의 기운을 다스리는 날입니다. 가정이나 가까운 관계에서 주도권을 쥐고 이끌어가기 좋습니다.';
+    return '오늘의 기운과 나의 자리(일지)가 무난하게 흘러가는 날입니다.';
+  }
+
+  // 두 지지(띠)의 삼합·상충 등 관계 코멘트 (오늘의 운세: 오늘의 띠 vs 나의 띠에 사용)
+  const ANIMAL_RELATION_TEXT = (aAnimal, bAnimal) => {
+    const triads = [['쥐','용','원숭이'],['소','뱀','닭'],['호랑이','말','개'],['토끼','양','돼지']];
+    const opposite = {쥐:'말',소:'양',호랑이:'원숭이',토끼:'닭',용:'돼지',뱀:'개',말:'쥐',양:'소',원숭이:'호랑이',닭:'토끼',개:'뱀',돼지:'용'};
+    if (aAnimal === bAnimal) return `둘 다 ${aAnimal}띠로 같은 띠입니다. 서로를 잘 이해하지만, 비슷한 성향 탓에 자극이 부족하게 느껴질 수 있습니다.`;
+    if (opposite[aAnimal] === bAnimal) return `${aAnimal}띠와 ${bAnimal}띠는 정반대에 놓인 띠로, 기질 차이가 뚜렷할 수 있습니다. 서로 다른 점을 매력으로 받아들이면 좋은 자극이 됩니다.`;
+    for (const t of triads){ if (t.includes(aAnimal) && t.includes(bAnimal)) return `${aAnimal}띠와 ${bAnimal}띠는 예로부터 삼합(三合)을 이루는 조합으로, 함께 있을 때 손발이 잘 맞는다고 봅니다.`; }
+    return `${aAnimal}띠와 ${bAnimal}띠는 특별히 강하게 부딪히거나 강하게 당기지 않는 무난한 조합으로, 함께 만들어가는 시간에 따라 관계의 색이 정해집니다.`;
+  };
+
   function mod(n, m){ return ((n % m) + m) % m; }
+
+  // ---- 향후 5년 세운(歲運) 해석 : 십성을 5개 큰 갈래로 묶어 설명 ----
+  const TEN_GOD_TO_GROUP = {
+    비견:'same', 겁재:'same',
+    식신:'self_generates_year', 상관:'self_generates_year',
+    편재:'self_controls_year', 정재:'self_controls_year',
+    편관:'year_controls_self', 정관:'year_controls_self',
+    편인:'year_generates_self', 정인:'year_generates_self',
+  };
+  const SIPSUNG_TITLE = {
+    same: '비겁(比劫)의 해', self_generates_year: '식상(食傷)의 해',
+    year_generates_self: '인성(印星)의 해', self_controls_year: '재성(財星)의 해',
+    year_controls_self: '관성(官星)의 해',
+  };
+  const SIPSUNG_SHORT = {
+    same: '인간관계·협업에서 힘을 얻는 해',
+    self_generates_year: '표현과 새로운 시도가 결실로 이어지는 해',
+    year_generates_self: '배움과 귀인의 도움을 받아 내실을 다지는 해',
+    self_controls_year: '재물의 흐름이 활발해지는 해',
+    year_controls_self: '책임이 커지지만 자리가 단단해지는 해',
+  };
+  const SIPSUNG_TEXT = {
+    same: '나와 같은 기운의 해입니다. 형제·동료·경쟁자와의 관계가 두드러지는 시기로, 협력하면 힘을 얻지만 경쟁이 심해질 수도 있으니 주변과 호흡을 잘 맞추는 것이 중요합니다.',
+    self_generates_year: '내 기운을 밖으로 펼치는 해입니다. 표현하고 만들어내는 데 유리하며, 새로운 시도나 창작·소통과 관련된 결실을 맺기 좋은 시기입니다.',
+    year_generates_self: '도움을 받는 해입니다. 배움과 휴식, 귀인의 도움이 따르며 내면을 다지기에 좋은 시기입니다.',
+    self_controls_year: '내가 주도권을 쥐는 해로, 재물운과 밀접하게 연결됩니다. 다만 욕심을 부리기보다 꾸준히 관리하는 자세가 필요합니다.',
+    year_controls_self: '부담과 책임이 커지는 해입니다. 시험·승진·조직 내 평가와 관련된 긴장이 있을 수 있지만, 잘 버텨내면 위치가 단단해지는 시기이기도 합니다.',
+  };
 
   function toJDN(y, m, d){
     const a = Math.floor((14 - m) / 12);
@@ -999,9 +992,6 @@
   }
 
   wireDateGroup('s_year', 's_month', 's_day');
-  wireDateGroup('g_a_year', 'g_a_month', 'g_a_day');
-  wireDateGroup('g_b_year', 'g_b_month', 'g_b_day');
-  wireDateGroup('y_by', 'y_bm', 'y_bd');
 
   function wireCalToggle(prefix){
     const leapWrap = document.getElementById(prefix + '_leapWrap');
@@ -1012,9 +1002,6 @@
     });
   }
   wireCalToggle('s');
-  wireCalToggle('g_a');
-  wireCalToggle('g_b');
-  wireCalToggle('y');
 
   // 생년월일 입력을 읽어서(양력/음력 선택에 따라) 항상 "양력" {y,m,d}로 돌려주는 헬퍼
   function resolveBirthDate(prefix, yearId, monthId, dayId){
@@ -1160,129 +1147,73 @@
     }
     document.getElementById('s_detailText').textContent = detail;
 
+    // ---- 사주격(四柱格) : 월지 정기와 일간의 십성 관계로 산출 ----
+    const monthMainStemIdx = BRANCH_MAIN_STEM[monthP.branchIdx];
+    const monthTenGod = getTenGod(dayP.stemIdx, monthMainStemIdx);
+    const gyeok = GYEOKGUK_INFO[monthTenGod];
+    document.getElementById('s_gyeokTitle').textContent = `사주격(四柱格) — ${gyeok.name}`;
+    document.getElementById('s_gyeokText').textContent =
+      `월지 ${BRANCHES[monthP.branchIdx].kr}(${BRANCHES[monthP.branchIdx].han})의 정기는 ${STEMS[monthMainStemIdx].kr}(${STEMS[monthMainStemIdx].han})으로, 일간 ${STEMS[dayP.stemIdx].kr}과(와)의 관계는 '${monthTenGod}'입니다. ${gyeok.desc}`;
+
+    // 격의 바탕이 되는 오행이 사주 원국 안에서 얼마나 힘을 받는지(오행 개수 기반 간이 판단)
+    const gyeokEl = STEMS[monthMainStemIdx].el;
+    const gyeokCount = counts[gyeokEl];
+    let strengthText;
+    if (gyeokCount >= 3) strengthText = `이 격의 바탕이 되는 ${gyeokEl}(${gyeokEl}) 기운이 사주 안에 ${gyeokCount}개로 넉넉해, 격이 뿌리를 잘 내리고 있는 편입니다.`;
+    else if (gyeokCount === 2) strengthText = `이 격의 바탕이 되는 ${gyeokEl}(${gyeokEl}) 기운이 사주 안에 ${gyeokCount}개로 무난한 수준입니다.`;
+    else strengthText = `이 격의 바탕이 되는 ${gyeokEl}(${gyeokEl}) 기운이 사주 안에 ${gyeokCount}개로 다소 약한 편이라, 이 기운을 채워주는 인연이나 환경을 만나면 격의 장점이 더 살아납니다.`;
+    document.getElementById('s_gyeokStrengthText').textContent = strengthText;
+
+    // ---- 오늘의 운세 : 오늘의 일주와 일간의 십성 관계 ----
+    const todayD = new Date();
+    const ty = todayD.getFullYear(), tm = todayD.getMonth() + 1, td = todayD.getDate();
+    const todayPillar = getDayStemBranch(ty, tm, td);
+    const todayTenGod = getTenGod(dayP.stemIdx, todayPillar.stemIdx);
+    document.getElementById('s_todayTitle').textContent = `오늘의 운세 (${ty}.${tm}.${td})`;
+    document.getElementById('s_todayPillars').innerHTML =
+      pillarHTML('오늘의 일주', todayPillar.stemIdx, todayPillar.branchIdx).replace('<div class="meaning">', '<div class="meaning" style="display:none">') +
+      `<div class="pillar"><div class="label">오늘과 나의 관계</div><span class="han" style="color:var(--gold-bright); font-size:1.4rem;">${todayTenGod}</span><div class="reading">일간 ${STEMS[dayP.stemIdx].kr} 기준</div></div>`;
+    document.getElementById('s_todayTenGodText').textContent = TODAY_TEN_GOD_TEXT[todayTenGod];
+    document.getElementById('s_todaySpouseText').textContent = getSpouseBranchComment(dayP.branchIdx, todayPillar.branchIdx);
+    document.getElementById('s_todayAnimalText').textContent =
+      `띠로 보면, 오늘은 ${BRANCHES[todayPillar.branchIdx].animal}의 기운이 있는 날입니다. ` + ANIMAL_RELATION_TEXT(BRANCHES[yearP.branchIdx].animal, BRANCHES[todayPillar.branchIdx].animal);
+    const luck = ELEMENT_LUCK[STEMS[todayPillar.stemIdx].el];
+    document.getElementById('s_todayLuckText').textContent = `오늘의 행운 색: ${luck.color} · 행운의 방향: ${luck.dir}`;
+
+    // ---- 향후 5년 세운(歲運) ----
+    const nowYear = new Date().getFullYear();
+    let saeunHTML = '';
+    for (let i = 0; i < 5; i++){
+      const sy = nowYear + i;
+      const sYearP = getYearStemBranch(sy, 6, 15); // 세운은 연도 자체 기준(대표일로 계산, 입춘 보정 불필요)
+      const sTenGod = getTenGod(dayP.stemIdx, sYearP.stemIdx);
+      const sGroup = TEN_GOD_TO_GROUP[sTenGod];
+      saeunHTML += `
+        <div class="saeun-card${i === 0 ? ' is-now' : ''}">
+          <div class="syear">${sy}년${i === 0 ? ' (올해)' : ''}</div>
+          <span class="shan" style="color:${ELEMENT_COLOR[STEMS[sYearP.stemIdx].el]}">${STEMS[sYearP.stemIdx].han}${BRANCHES[sYearP.branchIdx].han}</span>
+          <div class="reading">${STEMS[sYearP.stemIdx].kr}${BRANCHES[sYearP.branchIdx].kr}</div>
+          <span class="stag">${sTenGod} · ${SIPSUNG_TITLE[sGroup]}</span>
+          <div class="sdesc">${SIPSUNG_SHORT[sGroup]}</div>
+        </div>`;
+    }
+    document.getElementById('s_saeunGrid').innerHTML = saeunHTML;
+
+    let saeunDetailHTML = '';
+    for (let i = 0; i < 5; i++){
+      const sy = nowYear + i;
+      const sYearP = getYearStemBranch(sy, 6, 15);
+      const sTenGod = getTenGod(dayP.stemIdx, sYearP.stemIdx);
+      const sGroup = TEN_GOD_TO_GROUP[sTenGod];
+      saeunDetailHTML += `<p style="margin-bottom:12px;"><strong style="color:var(--gold-bright);">${sy}년 (${STEMS[sYearP.stemIdx].kr}${BRANCHES[sYearP.branchIdx].kr}·${sTenGod})</strong> — ${SIPSUNG_TEXT[sGroup]}</p>`;
+    }
+    document.getElementById('s_saeunDetail').innerHTML = saeunDetailHTML;
+
     document.getElementById('s_resultTitle').textContent = nameVal ? `${nameVal}님의 사주` : '나의 사주';
     const lunarNote = resolved.lunar ? ` (음력 ${resolved.lunar.y}.${resolved.lunar.m}.${resolved.lunar.d}${resolved.isLeap ? ' 윤달' : ''} → 양력 환산)` : '';
     document.getElementById('s_resultSub').textContent = `${y}년 ${m}월 ${d}일${lunarNote}` + (hourP ? ` ${sTime.value} 출생` : ' 출생 (시간 미상)');
 
     const box = document.getElementById('s_result');
-    box.classList.add('show');
-    box.scrollIntoView({behavior:'smooth', block:'start'});
-  });
-
-  /* ---------- 궁합 ---------- */
-  const gForm = document.getElementById('gunghapForm');
-  const RELATION_TEXT = (nameA, nameB) => ({
-    same: `${nameA}과(와) ${nameB}은(는) 같은 기운을 지녀 통하는 부분이 많고 죽이 잘 맞는 편입니다. 다만 취향이나 방식이 비슷해 부딪히면 자존심 싸움으로 번질 수 있으니, 서로 한 발씩 양보하는 자세가 좋습니다.`,
-    a_generates_b: `${nameA}이(가) ${nameB}에게 기운을 보태주는 관계입니다. ${nameA}이(가) 챙겨주고 ${nameB}이(가) 그 힘을 받아 성장하는 구도이니, ${nameB}은(는) 고마움을 표현하고 ${nameA}은(는) 일방적으로 베풀지 않도록 균형을 맞추면 좋습니다.`,
-    b_generates_a: `${nameB}이(가) ${nameA}에게 기운을 보태주는 관계입니다. ${nameB}이(가) 챙겨주고 ${nameA}이(가) 그 힘을 받아 성장하는 구도이니, ${nameA}은(는) 고마움을 표현하고 ${nameB}은(는) 일방적으로 베풀지 않도록 균형을 맞추면 좋습니다.`,
-    a_controls_b: `${nameA}이(가) ${nameB}을(를) 이끌어가는 관계입니다. ${nameA}의 주도 아래 안정적인 호흡을 만들어갈 수 있지만, 지나치게 주도하면 ${nameB}이(가) 답답함을 느낄 수 있어 균형이 필요합니다.`,
-    b_controls_a: `${nameB}이(가) ${nameA}을(를) 이끌어가는 관계입니다. ${nameB}의 주도 아래 안정적인 호흡을 만들어갈 수 있지만, 지나치게 주도하면 ${nameA}이(가) 답답함을 느낄 수 있어 균형이 필요합니다.`,
-  });
-  const RELATION_BADGE = {
-    same: '비화(比和) · 통하는 관계', a_generates_b: '상생(相生) · 내가 돕는 관계',
-    b_generates_a: '상생(相生) · 도움 받는 관계', a_controls_b: '상극(相剋) · 내가 이끄는 관계',
-    b_controls_a: '상극(相剋) · 상대가 이끄는 관계',
-  };
-  const ANIMAL_RELATION_TEXT = (aAnimal, bAnimal) => {
-    const triads = [['쥐','용','원숭이'],['소','뱀','닭'],['호랑이','말','개'],['토끼','양','돼지']];
-    const opposite = {쥐:'말',소:'양',호랑이:'원숭이',토끼:'닭',용:'돼지',뱀:'개',말:'쥐',양:'소',원숭이:'호랑이',닭:'토끼',개:'뱀',돼지:'용'};
-    if (aAnimal === bAnimal) return `둘 다 ${aAnimal}띠로 같은 띠입니다. 서로를 잘 이해하지만, 비슷한 성향 탓에 자극이 부족하게 느껴질 수 있습니다.`;
-    if (opposite[aAnimal] === bAnimal) return `${aAnimal}띠와 ${bAnimal}띠는 정반대에 놓인 띠로, 기질 차이가 뚜렷할 수 있습니다. 서로 다른 점을 매력으로 받아들이면 좋은 자극이 됩니다.`;
-    for (const t of triads){ if (t.includes(aAnimal) && t.includes(bAnimal)) return `${aAnimal}띠와 ${bAnimal}띠는 예로부터 삼합(三合)을 이루는 조합으로, 함께 있을 때 손발이 잘 맞는다고 봅니다.`; }
-    return `${aAnimal}띠와 ${bAnimal}띠는 특별히 강하게 부딪히거나 강하게 당기지 않는 무난한 조합으로, 함께 만들어가는 시간에 따라 관계의 색이 정해집니다.`;
-  };
-
-  gForm.addEventListener('submit', function(e){
-    e.preventDefault();
-    const errorEl = document.getElementById('g_error');
-    errorEl.textContent = '';
-    const resolvedA = resolveBirthDate('g_a', 'g_a_year', 'g_a_month', 'g_a_day');
-    const resolvedB = resolveBirthDate('g_b', 'g_b_year', 'g_b_month', 'g_b_day');
-    if (resolvedA.error || resolvedB.error){ errorEl.textContent = resolvedA.error || resolvedB.error; return; }
-
-    const aName = document.getElementById('g_a_name').value.trim() || '본인';
-    const bName = document.getElementById('g_b_name').value.trim() || '상대방';
-    const gType = document.getElementById('g_type').value;
-
-    const a = resolvedA.value, b = resolvedB.value;
-    const aDay = getDayStemBranch(a.y, a.m, a.d);
-    const bDay = getDayStemBranch(b.y, b.m, b.d);
-    const aYear = getYearStemBranch(a.y, a.m, a.d);
-    const bYear = getYearStemBranch(b.y, b.m, b.d);
-
-    const aEl = STEMS[aDay.stemIdx].el, bEl = STEMS[bDay.stemIdx].el;
-    const rel = relation(aEl, bEl);
-
-    document.getElementById('g_resultTitle').textContent = `${gType} 결과`;
-    document.getElementById('g_a_han').textContent = `${STEMS[aDay.stemIdx].han}${BRANCHES[aDay.branchIdx].han}`;
-    document.getElementById('g_a_label').textContent = `${aName} · ${STEMS[aDay.stemIdx].kr}(${aEl})${resolvedA.lunar ? ' [음력→양력]' : ''}`;
-    document.getElementById('g_b_han').textContent = `${STEMS[bDay.stemIdx].han}${BRANCHES[bDay.branchIdx].han}`;
-    document.getElementById('g_b_label').textContent = `${bName} · ${STEMS[bDay.stemIdx].kr}(${bEl})${resolvedB.lunar ? ' [음력→양력]' : ''}`;
-    document.getElementById('g_badge').textContent = RELATION_BADGE[rel];
-    document.getElementById('g_text').textContent = RELATION_TEXT(aName, bName)[rel];
-    document.getElementById('g_animalText').textContent = ANIMAL_RELATION_TEXT(BRANCHES[aYear.branchIdx].animal, BRANCHES[bYear.branchIdx].animal);
-
-    const box = document.getElementById('g_result');
-    box.classList.add('show');
-    box.scrollIntoView({behavior:'smooth', block:'start'});
-  });
-
-  /* ---------- 신년운세 ---------- */
-  const yearSelect = document.getElementById('y_year');
-  const thisYear = new Date().getFullYear();
-  for (let i=0;i<4;i++){
-    const opt = document.createElement('option');
-    opt.value = thisYear + i;
-    opt.textContent = (thisYear + i) + '년';
-    yearSelect.appendChild(opt);
-  }
-
-  const SIPSUNG_TEXT = {
-    same: '나와 같은 기운의 해입니다. 형제·동료·경쟁자와의 관계가 두드러지는 시기로, 협력하면 힘을 얻지만 경쟁이 심해질 수도 있으니 주변과 호흡을 잘 맞추는 것이 중요합니다.',
-    self_generates_year: '내 기운을 밖으로 펼치는 해입니다. 표현하고 만들어내는 데 유리하며, 새로운 시도나 창작·소통과 관련된 결실을 맺기 좋은 시기입니다.',
-    year_generates_self: '도움을 받는 해입니다. 배움과 휴식, 귀인의 도움이 따르며 내면을 다지기에 좋은 시기입니다.',
-    self_controls_year: '내가 주도권을 쥐는 해로, 재물운과 밀접하게 연결됩니다. 다만 욕심을 부리기보다 꾸준히 관리하는 자세가 필요합니다.',
-    year_controls_self: '부담과 책임이 커지는 해입니다. 시험·승진·조직 내 평가와 관련된 긴장이 있을 수 있지만, 잘 버텨내면 위치가 단단해지는 시기이기도 합니다.',
-  };
-  const SIPSUNG_TITLE = {
-    same: '비겁(比劫)의 해', self_generates_year: '식상(食傷)의 해',
-    year_generates_self: '인성(印星)의 해', self_controls_year: '재성(財星)의 해',
-    year_controls_self: '관성(官星)의 해',
-  };
-
-  document.getElementById('saeunForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const errorEl = document.getElementById('y_error');
-    errorEl.textContent = '';
-    const resolvedY = resolveBirthDate('y', 'y_by', 'y_bm', 'y_bd');
-    if (resolvedY.error){ errorEl.textContent = resolvedY.error; return; }
-    const {y,m,d} = resolvedY.value;
-    const targetYear = Number(yearSelect.value);
-
-    const dayP = getDayStemBranch(y,m,d);
-    const yearP = getYearStemBranch(targetYear, 6, 15); // 세운은 연도 자체 기준(입춘 보정 불필요, 대표일로 계산)
-
-    const dme = STEMS[dayP.stemIdx].el;
-    const yearEl = STEMS[yearP.stemIdx].el;
-
-    let key;
-    if (dme === yearEl) key = 'same';
-    else if (GENERATES[dme] === yearEl) key = 'self_generates_year';
-    else if (GENERATES[yearEl] === dme) key = 'year_generates_self';
-    else if (CONTROLS[dme] === yearEl) key = 'self_controls_year';
-    else key = 'year_controls_self';
-
-    document.getElementById('y_pillars').innerHTML =
-      `<div class="pillar"><div class="label">나의 일간</div><span class="han" style="color:${ELEMENT_COLOR[dme]}">${STEMS[dayP.stemIdx].han}</span><div class="reading">${STEMS[dayP.stemIdx].kr} · ${dme}</div></div>` +
-      pillarHTML(`${targetYear}년 年柱`, yearP.stemIdx, yearP.branchIdx).replace('<div class="meaning">','<div class="meaning" style="display:none">');
-
-    document.getElementById('y_resultTitle').textContent = `${targetYear}년 신년운세`;
-    const lunarNoteY = resolvedY.lunar ? ` (입력하신 음력 ${resolvedY.lunar.y}.${resolvedY.lunar.m}.${resolvedY.lunar.d}${resolvedY.isLeap ? ' 윤달' : ''} 기준)` : '';
-    document.getElementById('y_resultSub').textContent = `나의 일간(${STEMS[dayP.stemIdx].kr}·${dme}) 기준 ${targetYear}년(${STEMS[yearP.stemIdx].kr}${BRANCHES[yearP.branchIdx].kr}·${yearEl}) 풀이${lunarNoteY}`;
-    document.getElementById('y_relTitle').textContent = SIPSUNG_TITLE[key];
-    document.getElementById('y_relText').textContent = SIPSUNG_TEXT[key];
-
-    const box = document.getElementById('y_result');
     box.classList.add('show');
     box.scrollIntoView({behavior:'smooth', block:'start'});
   });
